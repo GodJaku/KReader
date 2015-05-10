@@ -2,6 +2,7 @@ package com.lucetek.kreader.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,7 +39,8 @@ public class TextViewFragment extends Fragment {
     }
 
     private void makeView(){
-        mView= new KReaderTextCanvas(getActivity());
+        Log.e("select file text viewer", selectedFile);
+        mView= (KReaderTextCanvas)wholeView.findViewById(R.id.canvasTextFragment); //new KReaderTextCanvas(getActivity(), selectedFile);
         mView.setFile(selectedFile);
     }
 

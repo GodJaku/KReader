@@ -3,7 +3,6 @@ package com.lucetek.kreader.fragments;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.lucetek.kreader.Constants;
 import com.lucetek.kreader.FileListAdapter;
 import com.lucetek.kreader.FileListItem;
+import com.lucetek.kreader.MainActivity;
 import com.lucetek.kreader.R;
 
 import java.io.File;
@@ -106,23 +107,17 @@ public class MainFragment extends Fragment {
         mCurrentFileList.clear();
 
         if(mRootDir.length() < mCurrentDir.length()) mCurrentFileList.add(new FileListItem(true, ".."));
-        for(int i=0; i<list.size(); i++){
-            Log.d("test", list.get(i).getFilename());
-            mCurrentFileList.add(list.get(i));
-        }
+        for(int i=0; i<list.size(); i++) mCurrentFileList.add(list.get(i));
         mFileListAdapter.notifyDataSetChanged();
     }
 
     AdapterView.OnItemClickListener itemClick= new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            if(mCurrentFileList.get(position).isDir()){
-                String selectedItem= mCurrentFileList.get(position).getFilename();
-                String path= getAbsolutePath(selectedItem);
-                viewFileList(getFileList(path));
-            } else{
-
-            }
+            String selectedItem= mCurrentFileList.get(position).getFilename();
+            String path= getAbsolutePath(selectedItem);
+            if(mCurrentFileList.get(position).isDir()) viewFileList(getFileList(path));
+            else if(selectedItem.substring(selectedItem.length()-4).equalsIgnoreCase(".txt")) ((MainActivity)getActivity()).moveToViewer(Constants.TEXT, path);
         }
     };
 
@@ -130,7 +125,6 @@ public class MainFragment extends Fragment {
         @Override
         public void onClick(View v){
             int id= v.getId();
-
             if(id == R.id.buttonFragmentMainRefeshList) viewFileList(getFileList(mCurrentDir));
         }
     };

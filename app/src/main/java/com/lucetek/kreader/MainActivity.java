@@ -58,7 +58,7 @@ public class MainActivity extends FragmentActivity {
         frgTransaction.commit();
     }
 
-    private void moveToViewer(int type, String path){
+    public void moveToViewer(int type, String path){
         mCurrentFrg= type;
 
         frgTransaction= getSupportFragmentManager().beginTransaction();
@@ -106,5 +106,4 @@ public class MainActivity extends FragmentActivity {
     private void loadSharedPreferences(){
 
     }
-
 }
