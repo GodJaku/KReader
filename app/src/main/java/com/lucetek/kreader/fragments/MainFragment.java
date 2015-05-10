@@ -52,9 +52,8 @@ public class MainFragment extends Fragment {
 
 //        if(!sdExist()) ((MainActivity)getActivity()).finish();
         getFileList();
-        mCurrentFileList= getFileList(mRootDir);
         initFileList();
-        viewFileList(mCurrentFileList);
+        viewFileList(getFileList(mRootDir));
     }
 
     private void getFileList() {
@@ -82,7 +81,7 @@ public class MainFragment extends Fragment {
         File[] files= (new File(path)).listFiles();
         for(int i=0; i<files.length; i++){
             File tempfile= files[i];
-            if(tempfile.isDirectory()) temp.add(new FileListItem(true, tempfile.getName()));
+            if(tempfile.isDirectory()) temp.add(new FileListItem(true, tempfile.getName()+"/"));
             else temp.add(new FileListItem(false, tempfile.getName()));
         }
 
@@ -117,8 +116,11 @@ public class MainFragment extends Fragment {
     AdapterView.OnItemClickListener itemClick= new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView parent, View view, int position, long id) {
-            String selectedItem= mCurrentFileList.get(position).getFilename();
-            String path= getAbsolutePath(selectedItem);
+            if(mCurrentFileList.get(position).isDir()){
+                String selectedItem= mCurrentFileList.get(position).getFilename();
+                String path= getAbsolutePath(selectedItem);
+                viewFileList(getFileList(path));
+            }
         }
     };
 

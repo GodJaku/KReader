@@ -1,7 +1,7 @@
 package com.lucetek.kreader;
 
 import android.content.Context;
-import android.graphics.Typeface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +28,14 @@ public class FileListAdapter extends ArrayAdapter {
     public View getView(int pos, View v, ViewGroup container){
         if( v == null ) v= LayoutInflater.from(mContext).inflate(R.layout.item_filelist, null);
 
-//        if(mList != null && mList.get(pos) != null ){
-            ((TextView)v.findViewById(R.id.textFileListItem)).setText(mList.get(pos).getFilename());
+        if(mList != null && mList.get(pos) != null ){
+//            ((TextView)v.findViewById(R.id.textFileListItem)).setText(mList.get(pos).getFilename());
             if(mList.get(pos).isDir())
-                ((TextView)v.findViewById(R.id.textFileListItem)).setTypeface(null, Typeface.BOLD);
-//        }
+                ((TextView)v.findViewById(R.id.textFileListItem)).setText(Html.fromHtml("<b>"+mList.get(pos).getFilename()+"</b>"));
+            else
+                ((TextView)v.findViewById(R.id.textFileListItem)).setText(mList.get(pos).getFilename());
+//                ((TextView)v.findViewById(R.id.textFileListItem)).setTypeface(null, Typeface.BOLD);
+        }
 
         return v;
     }
