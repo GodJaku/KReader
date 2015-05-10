@@ -50,8 +50,7 @@ public class MainFragment extends Fragment {
     private void makeView(){
         mFileListView= (ListView)wholeView.findViewById(R.id.listFragmentMainFileList);
 
-//        if(!sdExist()) ((MainActivity)getActivity()).finish();
-        getFileList();
+        if(mCurrentDir == null) getFileList();
         initFileList();
         viewFileList(getFileList(mRootDir));
     }
@@ -81,6 +80,7 @@ public class MainFragment extends Fragment {
         File[] files= (new File(path)).listFiles();
         for(int i=0; i<files.length; i++){
             File tempfile= files[i];
+            if(tempfile.getName().contains("com.")) continue;
             if(tempfile.isDirectory()) temp.add(new FileListItem(true, tempfile.getName()+"/"));
             else temp.add(new FileListItem(false, tempfile.getName()));
         }
@@ -120,6 +120,8 @@ public class MainFragment extends Fragment {
                 String selectedItem= mCurrentFileList.get(position).getFilename();
                 String path= getAbsolutePath(selectedItem);
                 viewFileList(getFileList(path));
+            } else{
+
             }
         }
     };
@@ -129,7 +131,7 @@ public class MainFragment extends Fragment {
         public void onClick(View v){
             int id= v.getId();
 
-            if(id == R.id.buttonFragmentMainRefeshList) getFileList();
+            if(id == R.id.buttonFragmentMainRefeshList) viewFileList(getFileList(mCurrentDir));
         }
     };
 }

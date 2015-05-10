@@ -6,7 +6,7 @@ package com.lucetek.kreader;
 public class Constants {
 
     public static final int LIST= 0;
-    public static final int TEXT= 0;
-    public static final int COMIC= 0;
-    public static final int PDF= 0;
+    public static final int TEXT= 1;
+    public static final int COMIC= 2;
+    public static final int PDF= 3;
 }
