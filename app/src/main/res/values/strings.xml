@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">KReader</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="noSDCardText">SD카드를 장착해주십시오</string>
+</resources>
